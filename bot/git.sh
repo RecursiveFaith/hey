@@ -2,10 +2,7 @@
 message="$@"
 timestamp=$(date "+%H%M")
 today=$(date "+%y%m%d")
-
-# Set the HEY_GIT directory
-# @TODO too specific to me, maybe remove?
-logfile="$HEY_GIT/$today.md"
+export PATH=$PATH
 
 # If no message autocommit
 if [ -z "$message" ]; then
@@ -20,13 +17,12 @@ echo -e $MAGENTA"Should the message be committed ([Y]es / [n]o / [r]egenerate)?"
 read -r should_commit
 
 if [ -z "$should_commit" ] || [[ "$should_commit" =~ ^[Yy] ]]; then
-    # Log the file AFTER confirmation but BEFORE commit
+    # Log to DIARY_HISTORY AFTER confirmation but BEFORE commit
     repo=$(git remote get-url origin | awk -F: '{print $2}')
-    if [ -f "$logfile" ]; then
-        echo "" >> "$logfile"
-        echo "$timestamp <$repo> $message" >> "$logfile"
+    if [ -f "$DIARY_HISTORY" ]; then
+        echo "$timestamp <$repo> $message" >> "$DIARY_HISTORY"
     else
-        echo -e $RED"TODAYS DAILY LOG DOES NOT EXIST YET;\n$GREEN However, COMMIT SUCCESSFUL. $YELLOW MESSAGE ADDED TO $TEAL xsel -ib $YELLOW INSTEAD $RESET"
+        echo -e $RED"DIARY_HISTORY FILE DOES NOT EXIST YET;\n$GREEN However, COMMIT SUCCESSFUL. $YELLOW MESSAGE ADDED TO $TEAL xsel -ib $YELLOW INSTEAD $RESET"
         echo "$timestamp <$repo> $message" | xsel -ib
     fi
     
@@ -42,8 +38,8 @@ elif [[ "$should_commit" =~ ^[Rr] ]]; then
     
     # Log the regenerated message
     repo=$(git remote get-url origin | awk -F: '{print $2}')
-    if [ -f "$logfile" ]; then
-        echo "$timestamp <$repo> $message" >> "$logfile"
+    if [ -f "$DIARY_HISTORY" ]; then
+        echo "$timestamp <$repo> $message" >> "$DIARY_HISTORY"
     else
         echo "$timestamp <$repo> $message" | xsel -ib
     fi
@@ -54,3 +50,5 @@ elif [[ "$should_commit" =~ ^[Rr] ]]; then
 else
     echo -e "$YELLOW Commit cancelled. $RESET"
 fi
+
+echo -e $RESET
