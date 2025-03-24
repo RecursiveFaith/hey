@@ -1,4 +1,12 @@
 #!/bin/bash
+
+# Check for --model flag
+model=""
+if [[ "$1" == "--model" && -n "$2" ]]; then
+    model="$2"
+    shift 2  # Remove --model and its value from arguments
+fi
+
 message="$@"
 timestamp=$(date "+%H%M")
 today=$(date "+%y%m%d")
@@ -8,7 +16,14 @@ export PATH=$PATH
 if [ -z "$message" ]; then
     git add .
     message=$(git status; git diff --staged)
-    message=$(echo "$message" | bash $chat "summarize git changes as a single line commit message. Dont wrap in quotes, add markup...just a single line. Do not acknowledge. Just start the line with todays date and a space: $today " | tr -d '\n')
+
+    # Add model flag if specified
+    model_flag=""
+    if [ -n "$model" ]; then
+        model_flag="--model $model"
+    fi
+
+    message=$(echo "$message" | bash $chat $model_flag --prompt "summarize git changes as a single line commit message. Dont wrap in quotes, add markup...just a single line. Do not acknowledge. Just start the line with todays date and a space: $today " | tr -d '\n')
     echo -e $BGBLUE"$message"$CLEAR
 fi
 
