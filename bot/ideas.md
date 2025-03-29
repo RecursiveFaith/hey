@@ -13,7 +13,36 @@
 
 
 # Weekly review agent
-Proposed Agentic Weekly Review Framework:
+
+[ ] Phase 1 Review agent
+  [ ] Structured data [[dailies/summaries]]
+    [ ] Extract sleep (start, end, duration, sleep square)
+    [ ] Extract substance use (type: edible, alcohol), dosage, time, subjective effect
+    [ ] Health metrics (weight, exercise, days)
+    [ ] Extract finances (made/spent)
+    [ ] Extract ideas
+    [ ] Extract reminders
+    [ ] Extract important notes
+[ ] Phase 2 Analyst agent
+  [ ] Pass original data along with structured data as reinforcement
+  [ ] Analyze correlations
+    [ ] sleep v productivity (does better sleep actually make me more productive?)
+    [ ] sleep v drugs (does less sleep increase want for drugs?)
+    [ ] identify recurring thoughts/notes
+    [ ] identify weird days
+    [ ] major pivots or direction changes due to sleep or drug use
+[ ] Phase 3 Chatting
+  [ ] Compare work week with Radical Gnosis goals
+  [ ] Generate questions for users
+  [ ] Generate discussion topics
+[ ] Stretch goals
+  [ ] Document this process
+  [ ] Post to Recursive.faith
+  [ ] Share on Reddit
+  [ ] Share on Medium
+
+
+## Proposed Agentic Weekly Review Framework:
 
 This involves multiple conceptual "agents" (which could be implemented as distinct prompts/scripts interacting with you or a future LLM):
 
