@@ -5,7 +5,7 @@ A lightweight Bash framework for building AI-powered terminal tools and agents. 
 ## Prerequisites
 
 - Bash 4.0+
-- `curl`, `jq`, `xsel` installed
+- Dependencies: `curl jq xsel tree`
 - API key from [OpenRouter](https://openrouter.ai) or [Groq](https://groq.com)
 
 ## Quick Setup
