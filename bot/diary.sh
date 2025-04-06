@@ -1,12 +1,21 @@
 #!/bin/bash
 # --- Configuration ---
-# Get the history file path (assuming it's passed as an argument, or default)
-HISTORY_FILE="${1:-history.md}"
+# Get the history file path (using $HISTORY environment variable as default if no argument is passed)
+HISTORY_FILE="${1:-$HISTORY}"
 # Define the output file name (e.g., weekly_summary_250401.md)
 OUTPUT_FILE="weekly_summary_$(date +%y%m%d).md"
 
 hey=../chat.sh
 context=../contextualize.sh
+
+# Check if HISTORY_FILE is set and exists
+if [ -z "$HISTORY_FILE" ]; then
+  echo "Error: HISTORY environment variable is not set and no history file path provided as an argument."
+  exit 1
+elif [ ! -f "$HISTORY_FILE" ]; then
+  echo "Error: History file '$HISTORY_FILE' not found."
+  exit 1
+fi
 
 # Clear the output file if it exists
 > "$OUTPUT_FILE"
@@ -83,6 +92,3 @@ echo "Summary generation complete: $OUTPUT_FILE"
 # Optional: Copy to clipboard
 # cat "$OUTPUT_FILE" | xsel -ib
 # echo "Summary copied to clipboard."
-    
-
-
