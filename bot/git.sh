@@ -32,12 +32,12 @@ echo -e $MAGENTA"Should the message be committed ([Y]es / [n]o / [r]egenerate)?"
 read -r should_commit
 
 if [ -z "$should_commit" ] || [[ "$should_commit" =~ ^[Yy] ]]; then
-    # Log to DIARY_HISTORY AFTER confirmation but BEFORE commit
+    # Log to HISTORY AFTER confirmation but BEFORE commit
     repo=$(git remote get-url origin | awk -F: '{print $2}')
-    if [ -f "$DIARY_HISTORY" ]; then
-        echo "$timestamp <$repo> $message" >> "$DIARY_HISTORY"
+    if [ -f "$HISTORY" ]; then
+        echo "$timestamp <$repo> $message" >> "$HISTORY"
     else
-        echo -e $RED"DIARY_HISTORY FILE DOES NOT EXIST YET;\n$GREEN However, COMMIT SUCCESSFUL. $YELLOW MESSAGE ADDED TO $TEAL xsel -ib $YELLOW INSTEAD $RESET"
+        echo -e $RED"HISTORY FILE DOES NOT EXIST YET;\n$GREEN However, COMMIT SUCCESSFUL. $YELLOW MESSAGE ADDED TO $TEAL xsel -ib $YELLOW INSTEAD $RESET"
         echo "$timestamp <$repo> $message" | xsel -ib
     fi
     
@@ -53,8 +53,8 @@ elif [[ "$should_commit" =~ ^[Rr] ]]; then
     
     # Log the regenerated message
     repo=$(git remote get-url origin | awk -F: '{print $2}')
-    if [ -f "$DIARY_HISTORY" ]; then
-        echo "$timestamp <$repo> $message" >> "$DIARY_HISTORY"
+    if [ -f "$HISTORY" ]; then
+        echo "$timestamp <$repo> $message" >> "$HISTORY"
     else
         echo "$timestamp <$repo> $message" | xsel -ib
     fi
