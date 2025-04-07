@@ -19,7 +19,7 @@ check_command awk
 check_command head
 check_command tail
 check_command date
-check_command context # Check if contextualize function/alias exists
+check_command contextualize # Check if contextualize function/alias exists
 check_command hey           # Check if hey function/alias exists
 
 # --- Variables ---
@@ -109,7 +109,7 @@ else
     # Use contextualize script/function
     if [ ${#context_files[@]} -gt 0 ]; then
       echo "Using files: ${context_files[*]}"
-      additional_context=$(context "${context_files[@]}") # Pass file paths to contextualize
+      additional_context=$(contextualize "${context_files[@]}") # Pass file paths to contextualize
     fi
 
     # --- Combine Context ---
